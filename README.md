@@ -5,7 +5,8 @@
 ## Artifacts
 
 `cron-stream` artifacts are
-[released to clojars](https://clojars.org/com.joshuagriffith/cron-stream).
+[released to clojars](https://clojars.org/com.joshuagriffith/cron-stream). To
+use with leiningen:
 
 ```clj
 [com.joshuagriffith/cron-stream "0.1.0"]
