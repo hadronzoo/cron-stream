@@ -22,6 +22,9 @@ use with leiningen:
   - `:max-error` the largest allowable error (in
     milliseconds). Defaults to 50 ms.
 
+It returns a manifold stream that receives values corresponding to the
+times defined in the given cron expression.
+
 To use with [manifold](https://github.com/ztellman/manifold):
 
 ```clj

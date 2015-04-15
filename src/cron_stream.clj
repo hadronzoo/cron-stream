@@ -15,7 +15,10 @@
                  Defaults to the local system timezone.
   
     :max-error - the largest allowable error (in milliseconds).
-                 Defaults to 50 ms."
+                 Defaults to 50 ms.
+
+  Returns a manifold stream that receives values corresponding to the
+  times defined in the given cron expression."
 
   [cron-expression & {:keys [timezone max-error]
                         :or {timezone (TimeZone/getDefault)
