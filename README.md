@@ -13,7 +13,15 @@ Manifold-based cron streams
 
 ## Usage
 
-To use with manifold:
+`cron-stream` takes a cron string and the following optional keywords:
+
+  - `:timezone` evaluate the cron expression in a given
+    TimeZone. Defaults to the local system timezone.
+  
+  - `:max-error` the largest allowable error (in
+    milliseconds). Defaults to 50 ms.
+
+To use with [manifold](https://github.com/ztellman/manifold):
 
 ```clj
 (require '[manifold.deferred :as d]
