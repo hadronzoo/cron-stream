@@ -1,6 +1,6 @@
 # cron-stream
 
-Manifold-based cron streams
+[Manifold-based](https://github.com/ztellman/manifold) cron streams
 
 ## Artifacts
 
@@ -16,7 +16,7 @@ Manifold-based cron streams
 `cron-stream` takes a cron string and the following optional keywords:
 
   - `:timezone` evaluate the cron expression in a given
-    TimeZone. Defaults to the local system timezone.
+    `TimeZone`. Defaults to the local system timezone.
   
   - `:max-error` the largest allowable error (in
     milliseconds). Defaults to 50 ms.
