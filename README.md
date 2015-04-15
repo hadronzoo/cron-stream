@@ -55,6 +55,11 @@ Emits:
 [#inst "2015-04-15T21:48:21.001-00:00" 2015-04-15T21:48:21.000Z]
 ```
 
+## Changes
+
+- `0.1.1`: fix classpath
+- `0.1.0`: initial release
+
 ## License
 
 Copyright © 2015 Joshua Griffith
