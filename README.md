@@ -22,11 +22,9 @@ To use with manifold:
 
 (def cs (cron-stream "*/3 * * * * *"))
 
-(d/loop [i 0]
+(dotimes [_ 10]
   (println @(d/chain' (s/take! cs)
-                      #(vector (Date.) (str %))))
-  (when (< i 10)
-    (d/recur (inc i))))
+                      #(vector (Date.) (str %)))))
 ```
 
 Emits:
