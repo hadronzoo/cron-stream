@@ -35,18 +35,16 @@ To create a stream that emits dates every three seconds:
 (require '[manifold.deferred :as d]
          '[manifold.stream :as s]
          '[com.joshuagriffith.cron-stream :refer [cron-stream]])
-
-(def cs (cron-stream "*/3 * * * * *"))
-
-(dotimes [_ 3] (println @(s/take! cs)))
+(dotimes [_ 3]
+  (println @(s/take! (cron-stream "*/3 * * * * *"))))
 ```
 
 will print dates every three seconds (on the second):
 
 ```clj
-#inst "2015-04-16T05:10:48.000-00:00"
-#inst "2015-04-16T05:12:12.000-00:00"
-#inst "2015-04-16T05:12:15.000-00:00"
+#inst "2015-04-16T05:51:30.000-00:00"
+#inst "2015-04-16T05:51:33.000-00:00"
+#inst "2015-04-16T05:51:36.000-00:00"
 ```
 
 ## Changes
