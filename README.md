@@ -8,9 +8,7 @@
 [released to clojars](https://clojars.org/com.joshuagriffith/cron-stream). To
 use with leiningen:
 
-```clj
-[com.joshuagriffith/cron-stream "0.1.0"]
-```
+[![Clojars Project](http://clojars.org/com.joshuagriffith/cron-stream/latest-version.svg)](http://clojars.org/com.joshuagriffith/cron-stream)
 
 ## Usage
 
