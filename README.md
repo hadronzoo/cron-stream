@@ -34,10 +34,8 @@ Additionally, `cron-stream` takes the following option keys:
 It returns a manifold stream containing `Date`'s. If the stream parks
 for an extended period of time, the next date will be computed based
 on when the stream resumes accepting `put!`'s. To prevent missing
-dates, use a non-zero buffer value.
-
-Note: the initial `Date` is calculated from the time the stream is
-created.
+dates, use a non-zero buffer value. Note: the initial `Date` is
+calculated from the time the stream is created.
 
 To create a stream that emits dates every three seconds:
 
