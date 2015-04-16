@@ -35,6 +35,7 @@ To create a stream that emits dates every three seconds:
 (require '[manifold.deferred :as d]
          '[manifold.stream :as s]
          '[com.joshuagriffith.cron-stream :refer [cron-stream]])
+
 (dotimes [_ 3]
   (println @(s/take! (cron-stream "*/3 * * * * *"))))
 ```
@@ -45,6 +46,24 @@ will print dates every three seconds (on the second):
 #inst "2015-04-16T05:51:30.000-00:00"
 #inst "2015-04-16T05:51:33.000-00:00"
 #inst "2015-04-16T05:51:36.000-00:00"
+```
+
+Manifold interoperates with
+[core.async](https://github.com/clojure/core.async). To connect a
+stream to a channel, use `connect`:
+
+```clj
+(require '[clojure.core.async :as async :refer [chan go-loop <!]])
+
+(def cs (cron-stream "*/3 * * * * *"))
+(def ch (chan))
+
+(s/connect cs ch)
+
+(go-loop [i 0]
+  (when (< i 3)
+    (println (<! ch))
+    (recur (inc i))))
 ```
 
 ## Changes
