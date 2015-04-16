@@ -12,9 +12,20 @@ use with leiningen:
 
 ## Usage
 
-`cron-stream` takes a 6-field cron expression and returns a stream
-that emits `Date`'s periodically, according to the supplied
-schedule. Additionally takes the following option keys:
+`cron-stream` takes a
+[6-field cron expression](http://en.wikipedia.org/wiki/Cron#CRON_expression)
+and returns a stream that emits `Date`'s periodically, according to
+the supplied schedule. Here are some
+[sample cron expressions](http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html):
+
+  - `"0 0 * * * *"` the top of every hour of every day
+  - `"*/10 * * * * *"` every ten seconds
+  - `"0 0 8-10 * * *"` 8, 9 and 10 o'clock of every day
+  - `"0 0/30 8-10 * * *"` 8:00, 8:30, 9:00, 9:30 and 10 o'clock every day
+  - `"0 0 9-17 * * MON-FRI"` on the hour nine-to-five weekdays
+  - `"0 0 0 25 12 ?"` every Christmas Day at midnight
+
+Additionally, `cron-stream` takes the following option keys:
 
   - `:timezone` evaluate the cron expression in a given
     `TimeZone`. Defaults to the local system timezone.
@@ -68,7 +79,7 @@ stream to a channel, use `connect`:
 
 Streams can also be treated as lazy seqs:
 
-```
+```clj
 (take 5 (s/stream->seq cs))
 ```
 
