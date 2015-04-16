@@ -32,10 +32,10 @@ Additionally, `cron-stream` takes the following option keys:
   
   - `:buffer` buffer size of the returned stream. Defaults to 0.
 
-Returns a manifold stream containing `Date`'s. If the stream parks for
-an extended period of time, the next date will be computed based on
-when the stream resumes accepting `put!`'s. To prevent missing dates,
-use a non-zero buffer value.
+It returns a manifold stream containing `Date`'s. If the stream parks
+for an extended period of time, the next date will be computed based
+on when the stream resumes accepting `put!`'s. To prevent missing
+dates, use a non-zero buffer value.
 
 Note: the initial `Date` is calculated from the time the stream is
 created.
@@ -59,7 +59,8 @@ will print dates every three seconds (on the second):
 #inst "2015-04-16T05:51:36.000-00:00"
 ```
 
-Manifold interoperates with
+[Manifold streams](https://github.com/ztellman/manifold/blob/master/docs/stream.md)
+interoperate with
 [core.async](https://github.com/clojure/core.async). To connect a
 stream to a channel, use `connect`:
 
