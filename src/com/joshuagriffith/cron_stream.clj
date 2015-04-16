@@ -8,27 +8,31 @@
 
 (defn cron-stream
   "Takes a 6-field cron expression and returns a stream that emits
-  DateTimes according to the supplied schedule. Optionally takes the
+  Dates according to the supplied schedule. Additionally takes the
   following option keys:
 
-    :timezone -  evaluate the cron expression in a given TimeZone.
-                 Defaults to the local system timezone.
+    :timezone - evaluate the cron expression in a given TimeZone.
+                Defaults to the local system timezone.
   
-    :max-error - the largest allowable error (in milliseconds).
-                 Defaults to 50 ms.
+    :buffer - buffer size of the returned stream. Defaults to 0.
 
-  Returns a manifold stream that receives values corresponding to the
-  times defined in the given cron expression."
+  Returns a manifold stream containing Dates. If the stream parks for
+  an extended period of time, the next date will be computed based on
+  when the stream resumes accepting puts. To prevent missing dates,
+  use a non-zero buffer value.
 
-  [cron-expression & {:keys [timezone max-error]
-                        :or {timezone (TimeZone/getDefault)
-                             max-error 50}}]
+  Note: the initial Date is calculated from the time the stream is
+  created."
+
+  [cron-expression & {:keys [timezone buffer]
+                      :or {timezone (TimeZone/getDefault)
+                           buffer 0}}]
   (let [cron-gen (CronSequenceGenerator. cron-expression timezone)]
-    (let [stream (s/stream)]
+    (let [stream (s/stream buffer)]
       (d/loop []
         (let [t0 (t/now)
-              t1 (c/from-date (.next cron-gen (c/to-date t0)))
-              delay (t/in-millis (t/interval t0 t1))]
+              t1 (.next cron-gen (c/to-date t0))
+              delay (t/in-millis (t/interval t0 (c/from-date t1)))]
           (d/chain (d/timeout! (d/deferred) delay true)
                    (fn [_]
                      (s/put! stream t1))
@@ -36,10 +40,4 @@
                      (if result
                        (d/recur)
                        (s/close! stream))))))
-
-      ;; filter stream for stale values
-      (s/filter
-       (fn [time]
-         (let [error (t/in-millis (t/interval time (t/now)))]
-           (d/success-deferred (<= error max-error))))
-       stream))))
+      stream)))

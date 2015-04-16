@@ -12,18 +12,24 @@ use with leiningen:
 
 ## Usage
 
-`cron-stream` takes a cron string and the following optional keywords:
+`cron-stream` takes a 6-field cron expression and returns a stream
+that emits `Date`s periodically, according to the supplied
+schedule. Additionally takes the following option keys:
 
   - `:timezone` evaluate the cron expression in a given
     `TimeZone`. Defaults to the local system timezone.
   
-  - `:max-error` the largest allowable error (in
-    milliseconds). Defaults to 50 ms.
+  - `:buffer` buffer size of the returned stream. Defaults to 0.
 
-It returns a manifold stream that receives values corresponding to the
-times defined in the given cron expression.
+ Returns a manifold stream containing `Date`s. If the stream parks for
+ an extended period of time, the next date will be computed based on
+ when the stream resumes accepting `put!`s. To prevent missing dates,
+ use a non-zero buffer value.
 
-To use with [manifold](https://github.com/ztellman/manifold):
+ Note: the initial `Date` is calculated from the time the stream is
+ created.
+
+To create a stream that emits dates every three seconds:
 
 ```clj
 (require '[manifold.deferred :as d]
@@ -32,29 +38,20 @@ To use with [manifold](https://github.com/ztellman/manifold):
 
 (def cs (cron-stream "*/3 * * * * *"))
 
-(dotimes [_ 10]
-  (println @(d/chain' (s/take! cs)
-                      #(vector (Date.) (str %)))))
+(dotimes [_ 3] (println @(s/take! cs)))
 ```
 
-Emits:
+will print dates every three seconds (on the second):
 
 ```clj
-[#inst "2015-04-15T21:47:51.000-00:00" 2015-04-15T21:47:51.000Z]
-[#inst "2015-04-15T21:47:54.004-00:00" 2015-04-15T21:47:54.000Z]
-[#inst "2015-04-15T21:47:57.004-00:00" 2015-04-15T21:47:57.000Z]
-[#inst "2015-04-15T21:48:00.000-00:00" 2015-04-15T21:48:00.000Z]
-[#inst "2015-04-15T21:48:03.001-00:00" 2015-04-15T21:48:03.000Z]
-[#inst "2015-04-15T21:48:06.005-00:00" 2015-04-15T21:48:06.000Z]
-[#inst "2015-04-15T21:48:09.000-00:00" 2015-04-15T21:48:09.000Z]
-[#inst "2015-04-15T21:48:12.004-00:00" 2015-04-15T21:48:12.000Z]
-[#inst "2015-04-15T21:48:15.002-00:00" 2015-04-15T21:48:15.000Z]
-[#inst "2015-04-15T21:48:18.002-00:00" 2015-04-15T21:48:18.000Z]
-[#inst "2015-04-15T21:48:21.001-00:00" 2015-04-15T21:48:21.000Z]
+#inst "2015-04-16T05:10:48.000-00:00"
+#inst "2015-04-16T05:12:12.000-00:00"
+#inst "2015-04-16T05:12:15.000-00:00"
 ```
 
 ## Changes
 
+- `0.2.0`: remove `max-error` option and add `buffer` option
 - `0.1.1`: fix classpath
 - `0.1.0`: initial release
 
