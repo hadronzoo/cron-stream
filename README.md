@@ -35,9 +35,9 @@ It returns a
 [manifold stream](https://github.com/ztellman/manifold/blob/master/docs/stream.md)
 containing `Date`'s. If the stream parks for an extended period of
 time, the next date will be computed based on when the stream resumes
-accepting `put!`'s. To prevent missing dates, use a non-zero buffer
-value. Note: the initial `Date` is calculated from the time the stream
-is created.
+accepting `put!`'s. To prevent missing cron events, use a non-zero
+buffer value. Note: the initial `Date` is calculated from the time the
+stream is created.
 
 To create a stream that emits dates every three seconds:
 
