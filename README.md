@@ -50,7 +50,7 @@ To create a stream that emits dates every three seconds:
   (println @(s/take! (cron-stream "*/3 * * * * *"))))
 ```
 
-will print dates every three seconds (on the second):
+This will print dates every three seconds (on the second):
 
 ```clj
 #inst "2015-04-16T05:51:30.000-00:00"
