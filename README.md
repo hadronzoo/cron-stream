@@ -13,7 +13,7 @@ use with leiningen:
 ## Usage
 
 `cron-stream` takes a 6-field cron expression and returns a stream
-that emits `Date`s periodically, according to the supplied
+that emits `Date`'s periodically, according to the supplied
 schedule. Additionally takes the following option keys:
 
   - `:timezone` evaluate the cron expression in a given
@@ -21,13 +21,13 @@ schedule. Additionally takes the following option keys:
   
   - `:buffer` buffer size of the returned stream. Defaults to 0.
 
- Returns a manifold stream containing `Date`s. If the stream parks for
- an extended period of time, the next date will be computed based on
- when the stream resumes accepting `put!`s. To prevent missing dates,
- use a non-zero buffer value.
+Returns a manifold stream containing `Date`'s. If the stream parks for
+an extended period of time, the next date will be computed based on
+when the stream resumes accepting `put!`'s. To prevent missing dates,
+use a non-zero buffer value.
 
- Note: the initial `Date` is calculated from the time the stream is
- created.
+Note: the initial `Date` is calculated from the time the stream is
+created.
 
 To create a stream that emits dates every three seconds:
 
