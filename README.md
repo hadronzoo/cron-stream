@@ -12,10 +12,9 @@ use with leiningen:
 
 ## Usage
 
-`cron-stream` takes a
-[6-field cron expression](http://en.wikipedia.org/wiki/Cron#CRON_expression)
-and returns a stream that emits `Date`'s periodically, according to
-the supplied schedule. Here are some
+`cron-stream` takes a 6-field cron expression and returns a stream
+that emits `Date`'s periodically, according to the supplied
+schedule. Here are some
 [sample cron expressions](http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html):
 
   - `"0 0 * * * *"` the top of every hour of every day
