@@ -64,7 +64,7 @@ stream to a channel, use `connect`:
   (when (< i 3)
     (println (<! ch))
     (recur (inc i))))
-    ```
+```
 
 Streams can also be treated as lazy seqs:
 
