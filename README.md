@@ -53,7 +53,7 @@ Manifold interoperates with
 stream to a channel, use `connect`:
 
 ```clj
-(require '[clojure.core.async :as async :refer [chan go-loop <!]])
+(require '[clojure.core.async :refer [chan go-loop <!]])
 
 (def cs (cron-stream "*/3 * * * * *"))
 (def ch (chan))
@@ -64,6 +64,12 @@ stream to a channel, use `connect`:
   (when (< i 3)
     (println (<! ch))
     (recur (inc i))))
+    ```
+
+Streams can also be treated as lazy seqs:
+
+```
+(take 5 (s/stream->seq cs))
 ```
 
 ## Changes
