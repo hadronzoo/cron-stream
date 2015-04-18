@@ -81,6 +81,7 @@ Streams can also be treated as lazy seqs:
 
 ## Changes
 
+- [`0.2.1`][v0.2.1]: improve performance and update manifold dependency
 - [`0.2.0`][v0.2.0]: remove `max-error` option and add `buffer` option
 - [`0.1.1`][v0.1.1]: fix classpath
 - `0.1.0`: initial release
@@ -99,3 +100,4 @@ your option) any later version.
 [sample cron expressions]: http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html
 [v0.1.1]: https://github.com/hadronzoo/cron-stream/compare/0.1.0...0.1.1
 [v0.2.0]: https://github.com/hadronzoo/cron-stream/compare/0.1.1...0.2.0
+[v0.2.1]: https://github.com/hadronzoo/cron-stream/compare/0.2.0...0.2.1
