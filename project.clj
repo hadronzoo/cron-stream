@@ -1,4 +1,4 @@
-(defproject com.joshuagriffith/cron-stream "0.2.0"
+(defproject com.joshuagriffith/cron-stream "0.2.1"
   :description "Manifold-based cron streams"
   :url "https://github.com/hadronzoo/cron-stream"
   :license {:name "Eclipse Public License"
