@@ -33,11 +33,11 @@
         (let [t0 (t/now)
               t1 (.next cron-gen (c/to-date t0))
               delay (t/in-millis (t/interval t0 (c/from-date t1)))]
-          (d/chain (d/timeout! (d/deferred) delay true)
-                   (fn [_]
-                     (s/put! stream t1))
-                   (fn [result]
-                     (if result
-                       (d/recur)
-                       (s/close! stream))))))
+          (d/chain' (d/timeout! (d/deferred) delay true)
+                    (fn [_]
+                      (s/put! stream t1))
+                    (fn [result]
+                      (if result
+                        (d/recur)
+                        (s/close! stream))))))
       stream)))
