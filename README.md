@@ -13,16 +13,16 @@ with Leiningen:
 
 `cron-stream` takes a 6-field cron expression and returns a stream
 that emits `Date`s periodically, according to the supplied
-schedule. Here are some [sample cron expressions][]:
+schedule. Here are some sample cron expressions:
 
-Expression               | Description
------------------------- | -----------------------------------------------
-`"0 0 * * * *"`          | the top of every hour of every day
-`"*/10 * * * * *"`       | every ten seconds
-`"0 0 8-10 * * *"`       | 8, 9 and 10 o'clock of every day
-`"0 0/30 8-10 * * *"`    | 8:00, 8:30, 9:00, 9:30 and 10 o'clock every day
-`"0 0 9-17 * * MON-FRI"` | on the hour nine-to-five weekdays
-`"0 0 0 25 12 ?"`        | every Christmas Day at midnight
+Expression             | Description
+---------------------- | -----------------------------------------------
+`"0 * * * *"`          | the top of every hour of every day
+`"*/10 * * * *"`       | every ten minutes
+`"0 8-10 * * *"`       | 8, 9 and 10 o'clock of every day
+`"0/30 8-10 * * *"`    | 8:00, 8:30, 9:00, 9:30 and 10 o'clock every day
+`"0 9-17 * * MON-FRI"` | on the hour nine-to-five weekdays
+`"0 0 25 12 ?"`        | every Christmas Day at midnight
 
 Additionally, `cron-stream` takes the following option keys:
 
@@ -37,7 +37,7 @@ based on when the stream resumes accepting `put!`s. To prevent missing
 cron events, use a non-zero buffer value. Note: the initial `Date` is
 calculated from the time the stream is created.
 
-To create a stream that emits dates every three seconds:
+To create a stream that emits dates every three minutes:
 
 ```clj
 (require '[manifold.deferred :as d]
@@ -45,15 +45,15 @@ To create a stream that emits dates every three seconds:
          '[com.joshuagriffith.cron-stream :refer [cron-stream]])
 
 (dotimes [_ 3]
-  (println @(s/take! (cron-stream "*/3 * * * * *"))))
+  (println @(s/take! (cron-stream "*/3 * * * *"))))
 ```
 
-This will print dates every three seconds (on the second):
+This will print dates every three minutes (on the minute):
 
 ```clj
-#inst "2015-04-16T05:51:30.000-00:00"
-#inst "2015-04-16T05:51:33.000-00:00"
-#inst "2015-04-16T05:51:36.000-00:00"
+#inst "2015-04-16T05:51:00.000-00:00"
+#inst "2015-04-16T05:52:00.000-00:00"
+#inst "2015-04-16T05:53:00.000-00:00"
 ```
 
 Manifold streams interoperate with [core.async][]. To connect a stream
@@ -62,7 +62,7 @@ to a channel, use `connect`:
 ```clj
 (require '[clojure.core.async :refer [chan go-loop <!]])
 
-(def cs (cron-stream "*/3 * * * * *"))
+(def cs (cron-stream "*/3 * * * *"))
 (def ch (chan))
 
 (s/connect cs ch)
@@ -81,6 +81,7 @@ Streams can also be treated as lazy seqs:
 
 ## Changes
 
+- [`1.0.0`][v1.0.0]: BREAKING: drop second support and switch to cronus
 - [`0.2.1`][v0.2.1]: improve performance and update manifold dependency
 - [`0.2.0`][v0.2.0]: remove `max-error` option and add `buffer` option
 - [`0.1.1`][v0.1.1]: fix classpath
@@ -97,7 +98,7 @@ your option) any later version.
 [core.async]: https://github.com/clojure/core.async
 [manifold stream]: https://github.com/ztellman/manifold/blob/master/docs/stream.md
 [manifold]: https://github.com/ztellman/manifold
-[sample cron expressions]: http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html
 [v0.1.1]: https://github.com/hadronzoo/cron-stream/compare/0.1.0...0.1.1
 [v0.2.0]: https://github.com/hadronzoo/cron-stream/compare/0.1.1...0.2.0
 [v0.2.1]: https://github.com/hadronzoo/cron-stream/compare/0.2.0...0.2.1
+[v1.0.0]: https://github.com/hadronzoo/cron-stream/compare/0.2.1...1.0.0
