@@ -11,7 +11,7 @@ with Leiningen:
 
 ## Usage
 
-`cron-stream` takes a 6-field cron expression and returns a stream
+`cron-stream` takes a 5-field cron expression and returns a stream
 that emits `Date`s periodically, according to the supplied
 schedule. Here are some sample cron expressions:
 
